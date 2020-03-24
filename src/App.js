@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import CardList from "./components/CardList";
 
 export default function App() {
   return (
@@ -9,13 +10,9 @@ export default function App() {
       </nav>
       <Switch>
         <Route exact path="/">
-          <Home />
+          <CardList />
         </Route>
       </Switch>
     </Router>
   );
-}
-
-function Home() {
-  return <h2>Home</h2>;
 }
