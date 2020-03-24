@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components/macro";
 import Card from "../Card";
 
 const CardList = () => {
   const [hasError, setError] = useState(false);
-  const [pokemonList, setPokemonList] = useState({});
+  const [pokemonList, setPokemonList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -12,7 +13,7 @@ const CardList = () => {
       );
       res
         .json()
-        .then(res => setPokemonList(res))
+        .then(res => setPokemonList(res.pokemon))
         .catch(err => setError(err));
     }
 
@@ -20,20 +21,23 @@ const CardList = () => {
   });
 
   const GetList = list => {
-    if (list.pokemon) {
-      const pokemonList = list.pokemon;
-      return pokemonList.map(pokemon => (
-        <Card key={pokemon.id} pokemon={pokemon} />
-      ));
+    if (list) {
+      return list.map(data => <Card key={data.id} cardData={data} />);
     }
   };
 
   return (
     <>
       {hasError && JSON.stringify(hasError)}
-      {GetList(pokemonList)}
+      <ListContainer>{GetList(pokemonList)}</ListContainer>
     </>
   );
 };
 
 export default CardList;
+
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+`;
