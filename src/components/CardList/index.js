@@ -4,29 +4,28 @@ import TextField from "@material-ui/core/TextField";
 import Card from "../Card";
 
 const CardList = () => {
-  const [hasError, setError] = useState(false);
-  const [completePokemonList, setCompletePokemonList] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState("");
-  const [filteredList, setFilteredList] = useState([]);
+  const [hasError, setErrors] = useState(false);
+  const [fullList, setFullList] = useState([]);
+  const [filteredList, setFilteredList] = useState(fullList);
+
+  async function fetchData() {
+    const res = await fetch(
+      "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
+    );
+    res
+      .json()
+      .then(res => setFullList(res.pokemon))
+      .catch(err => setErrors(err));
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(
-        "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
-      );
-      res
-        .json()
-        .then(res => setCompletePokemonList(res.pokemon))
-        .catch(err => setError(err));
-    }
-
     fetchData();
   });
 
   const startNewSearch = value => {
-    const newSearchList = completePokemonList.filter(pokemon =>
-      pokemon.name.includes(value)
-    );
+    console.log("new search started");
+    const newSearchList = () =>
+      fullList.filter(pokemon => pokemon.name.includes(value));
     setFilteredList(newSearchList);
   };
 
@@ -37,8 +36,8 @@ const CardList = () => {
 
   return (
     <>
-      {hasError && JSON.stringify(hasError)}
       <TextField onChange={handleSearchTermChange} />
+      {hasError && <span>{JSON.stringify(hasError)}</span>}
       <ListContainer>
         {filteredList.map(data => (
           <Card key={data.id} cardData={data} />
