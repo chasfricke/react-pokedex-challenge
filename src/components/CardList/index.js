@@ -4,50 +4,63 @@ import TextField from "@material-ui/core/TextField";
 import Card from "../Card";
 
 const CardList = () => {
-  const [hasError, setErrors] = useState(false);
   const [fullList, setFullList] = useState([]);
-  const [filteredList, setFilteredList] = useState(fullList);
-
-  async function fetchData() {
-    const res = await fetch(
-      "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
-    );
-    res
-      .json()
-      .then(res => setFullList(res.pokemon))
-      .catch(err => setErrors(err));
-  }
+  const [filteredList, setFilteredList] = useState([]);
+  const [nameInput, setNameInput] = useState("");
+  const [typeInput, setTypeInput] = useState("");
 
   useEffect(() => {
-    fetchData();
+    fetch(
+      "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
+    )
+      .then(res => res.json())
+      .then(response => {
+        setFullList(response.pokemon);
+      })
+      .catch(error => {
+        console.log(error);
+        return [];
+      });
   });
 
+  //Need to use local state to differentiate between e.target.values
+
   const startNewSearch = value => {
-    console.log("new search started");
-    const newSearchList = () =>
-      fullList.filter(pokemon => pokemon.name.includes(value));
-    setFilteredList(newSearchList);
+    console.log(nameInput);
+    // const nameList = fullList.filter(pokemon =>
+    //   pokemon.name.toLowerCase().includes(nameInput.toLowerCase())
+    // );
+
+    // need to add nested filters
+    const typeList = fullList.filter(pokemon =>
+      pokemon.type.filter(type => type.includes(typeInput))
+    );
+
+    setFilteredList(typeList);
   };
 
-  const handleSearchTermChange = event => {
-    // setSearchTerm(event.target.value);
-    startNewSearch(event.target.value);
+  const handleNameChange = event => {
+    setNameInput(event.target.value);
+    startNewSearch();
+  };
+
+  const handleTypeChange = event => {
+    setTypeInput(event.target.value);
+    startNewSearch();
   };
 
   return (
     <>
-      <TextField onChange={handleSearchTermChange} />
-      {hasError && <span>{JSON.stringify(hasError)}</span>}
+      <TextField onChange={handleNameChange} />
+      <TextField onChange={handleTypeChange} />
       <ListContainer>
-        {filteredList.map(data => (
+        {(filteredList.length === 0 ? fullList : filteredList).map(data => (
           <Card key={data.id} cardData={data} />
         ))}
       </ListContainer>
     </>
   );
 };
-
-export default CardList;
 
 const ListContainer = styled.div`
   display: flex;
@@ -56,3 +69,5 @@ const ListContainer = styled.div`
   justify-content: center;
   margin-top: 48px;
 `;
+
+export default CardList;

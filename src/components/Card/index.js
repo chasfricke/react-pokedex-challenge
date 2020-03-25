@@ -8,12 +8,13 @@ const Card = props => {
       <Background>
         <h2>{cardData.name}</h2>
         <p>{cardData.num}</p>
-        <p>{cardData.type}</p>
+        <p>Type: {cardData.type}</p>
         <p>Weaknesses:</p>
-        <hr />
-        {cardData.weaknesses.map(weakness => (
-          <p key={weakness}>{weakness}</p>
-        ))}
+        <Row>
+          {cardData.weaknesses.map(weakness => (
+            <p key={weakness}>{weakness}</p>
+          ))}
+        </Row>
       </Background>
     </CardBoundary>
   );
@@ -35,6 +36,15 @@ const Background = styled.div`
   height: 100%;
   width: 100%;
   padding: 16px;
+`;
+
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  p {
+    margin: 8px 16px 0 0;
+  }
 `;
 
 export default Card;
