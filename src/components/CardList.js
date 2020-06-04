@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
-import TextField from "@material-ui/core/TextField";
+
 import Card from "./Card";
 
-const CardList = ({ fullList }) => {
-  // ************** UNIVERAL FILTER **************
-
-  const allFilterClickListener = () => {
-    console.log("filter clicked");
-  };
-
+const CardList = ({ filteredList }) => {
   return (
     <>
-      {/* ************** NAME ************** */}
-      <TextField onChange={allFilterClickListener} />
       <ListContainer>
-        {fullList.length ? (
-          fullList.map((data) => <Card key={data.id} cardData={data} />)
+        {filteredList.length ? (
+          filteredList.map((data) => <Card key={data.id} cardData={data} />)
         ) : (
           <p>No results</p>
         )}

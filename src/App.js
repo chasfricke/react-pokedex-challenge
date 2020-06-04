@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import CardList from "./components/CardList";
+import Filter from "./components/Filter";
 
 const App = () => {
   const [fullList, setFullList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
-  // const [filteredList, setFilteredList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
 
   useEffect(() => {
     fetch(
@@ -16,7 +17,7 @@ const App = () => {
       .then(
         (response) => {
           setFullList(response.pokemon);
-          // setFilteredList(response.pokemon);
+          setFilteredList(response.pokemon);
           setIsLoaded(true);
         },
         (error) => {
@@ -34,7 +35,12 @@ const App = () => {
       </nav>
       <Switch>
         <Route exact path="/">
-          {isLoaded ? <CardList fullList={fullList} /> : <p>Loading...</p>}
+          <Filter fullList={fullList} setFilteredList={setFilteredList} />
+          {isLoaded ? (
+            <CardList filteredList={filteredList} />
+          ) : (
+            <p>Loading...</p>
+          )}
           {error && `${error}`}
         </Route>
       </Switch>
