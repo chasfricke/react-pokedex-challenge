@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import TextField from "@material-ui/core/TextField";
 import styled from "styled-components/macro";
+import FilterButton from "./FilterButton";
 
 const Filter = ({ fullList, setFilteredPosts }) => {
   const [type, setType] = useState({ water: false, fire: false });
@@ -12,17 +13,17 @@ const Filter = ({ fullList, setFilteredPosts }) => {
 
   return (
     <Container>
-      {/* <TextField
-        name="name"
-        onChange={(e) => allFilterClickListener(e, "name")}
-      /> */}
       <p>Type:</p>
-      <div data-name="water" onClick={(e) => allFilterClickListener(e, "type")}>
-        Water
-      </div>
-      <div data-name="fire" onClick={(e) => allFilterClickListener(e, "type")}>
-        Fire
-      </div>
+      <FilterButton
+        name="water"
+        label="water"
+        onClick={(e) => allFilterClickListener(e, "type")}
+      />
+      <FilterButton
+        name="fire"
+        label="fire"
+        onClick={(e) => allFilterClickListener(e, "type")}
+      />
       <div>{type.water && "water"}</div>
     </Container>
   );
