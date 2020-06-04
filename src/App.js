@@ -6,6 +6,7 @@ const App = () => {
   const [fullList, setFullList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  // const [filteredList, setFilteredList] = useState([]);
 
   useEffect(() => {
     fetch(
@@ -15,6 +16,7 @@ const App = () => {
       .then(
         (response) => {
           setFullList(response.pokemon);
+          // setFilteredList(response.pokemon);
           setIsLoaded(true);
         },
         (error) => {
@@ -32,7 +34,8 @@ const App = () => {
       </nav>
       <Switch>
         <Route exact path="/">
-          {error ? `${error}` : isLoaded ? <CardList /> : <p>Loading...</p>}
+          {isLoaded ? <CardList fullList={fullList} /> : <p>Loading...</p>}
+          {error && `${error}`}
         </Route>
       </Switch>
     </Router>

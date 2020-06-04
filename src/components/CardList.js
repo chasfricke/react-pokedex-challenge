@@ -1,25 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import TextField from "@material-ui/core/TextField";
-import Card from "../Card";
+import Card from "./Card";
 
-const CardList = () => {
-  const [fullList, setFullList] = useState([]);
-
-  useEffect(() => {
-    fetch(
-      "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
-    )
-      .then((res) => res.json())
-      .then((response) => {
-        setFullList(response.pokemon);
-      })
-      .catch((error) => {
-        console.log(error);
-        return [];
-      });
-  });
-
+const CardList = ({ fullList }) => {
   // ************** UNIVERAL FILTER **************
 
   const allFilterClickListener = () => {
@@ -31,9 +15,11 @@ const CardList = () => {
       {/* ************** NAME ************** */}
       <TextField onChange={allFilterClickListener} />
       <ListContainer>
-        {fullList.length
-          ? fullList.map((data) => <Card key={data.id} cardData={data} />)
-          : null}
+        {fullList.length ? (
+          fullList.map((data) => <Card key={data.id} cardData={data} />)
+        ) : (
+          <p>No results</p>
+        )}
       </ListContainer>
     </>
   );

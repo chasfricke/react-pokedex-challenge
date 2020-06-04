@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 
-const Card = props => {
+const Card = (props) => {
   const { cardData } = props;
   return (
     <CardBoundary>
@@ -11,7 +11,7 @@ const Card = props => {
         <p>Type: {cardData.type}</p>
         <p>Weaknesses:</p>
         <Row>
-          {cardData.weaknesses.map(weakness => (
+          {cardData.weaknesses.map((weakness) => (
             <p key={weakness}>{weakness}</p>
           ))}
         </Row>
