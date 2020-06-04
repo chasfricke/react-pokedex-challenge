@@ -29,7 +29,7 @@ const CardList = () => {
   return (
     <>
       {/* ************** NAME ************** */}
-      <TextField onChange={allFilterClickListener()} />
+      <TextField onChange={allFilterClickListener} />
       <ListContainer>
         {fullList.length
           ? fullList.map((data) => <Card key={data.id} cardData={data} />)
