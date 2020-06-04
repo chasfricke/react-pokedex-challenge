@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components/macro";
-
 import Card from "./Card";
 
 const CardList = ({ filteredList }) => {

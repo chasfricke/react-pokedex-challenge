@@ -22,7 +22,7 @@ const Container = styled.div`
   margin: 12px;
 `;
 
-const Button = styled.div`
+const Button = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -31,9 +31,9 @@ const Button = styled.div`
   border-radius: 25px;
   border: solid 1px #dadada;
   padding: 8px 12px;
-
-  background-color: ${(props) => (props.isClicked ? "#dadada" : "000000")};
+  font-size: 12px;
   cursor: pointer;
+  background-color: ${(props) => (props.isClicked ? "#dadada" : "000000")};
 `;
 
 export default FilterButton;

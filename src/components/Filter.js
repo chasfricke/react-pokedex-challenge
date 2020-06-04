@@ -24,7 +24,17 @@ const Filter = ({ fullList, setFilteredPosts }) => {
         label="fire"
         onClick={(e) => allFilterClickListener(e, "type")}
       />
-      <div>{type.water && "water"}</div>
+      <p>Weaknesses: </p>
+      <FilterButton
+        name="water"
+        label="water"
+        onClick={(e) => allFilterClickListener(e, "weaknesses")}
+      />
+      <FilterButton
+        name="fire"
+        label="fire"
+        onClick={(e) => allFilterClickListener(e, "weaknesses")}
+      />
     </Container>
   );
 };
