@@ -5,58 +5,35 @@ import Card from "../Card";
 
 const CardList = () => {
   const [fullList, setFullList] = useState([]);
-  const [filteredList, setFilteredList] = useState([]);
-  const [nameInput, setNameInput] = useState("");
-  const [typeInput, setTypeInput] = useState("");
 
   useEffect(() => {
     fetch(
       "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json"
     )
-      .then(res => res.json())
-      .then(response => {
+      .then((res) => res.json())
+      .then((response) => {
         setFullList(response.pokemon);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         return [];
       });
   });
 
-  //Need to use local state to differentiate between e.target.values
+  // ************** UNIVERAL FILTER **************
 
-  const startNewSearch = value => {
-    console.log(nameInput);
-    // const nameList = fullList.filter(pokemon =>
-    //   pokemon.name.toLowerCase().includes(nameInput.toLowerCase())
-    // );
-
-    // need to add nested filters
-    const typeList = fullList.filter(pokemon =>
-      pokemon.type.filter(type => type.includes(typeInput))
-    );
-
-    setFilteredList(typeList);
-  };
-
-  const handleNameChange = event => {
-    setNameInput(event.target.value);
-    startNewSearch();
-  };
-
-  const handleTypeChange = event => {
-    setTypeInput(event.target.value);
-    startNewSearch();
+  const allFilterClickListener = () => {
+    console.log("filter clicked");
   };
 
   return (
     <>
-      <TextField onChange={handleNameChange} />
-      <TextField onChange={handleTypeChange} />
+      {/* ************** NAME ************** */}
+      <TextField onChange={allFilterClickListener()} />
       <ListContainer>
-        {(filteredList.length === 0 ? fullList : filteredList).map(data => (
-          <Card key={data.id} cardData={data} />
-        ))}
+        {fullList.length
+          ? fullList.map((data) => <Card key={data.id} cardData={data} />)
+          : null}
       </ListContainer>
     </>
   );
