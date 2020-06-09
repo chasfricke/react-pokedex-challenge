@@ -4,11 +4,23 @@ import styled from "styled-components/macro";
 import FilterButton from "./FilterButton";
 
 const Filter = ({ fullList, setFilteredPosts }) => {
-  const [type, setType] = useState({ water: false, fire: false });
+  const [type, setType] = useState({});
+  const [weaknesses, setWeaknesses] = useState({});
 
   // ************** UNIVERAL FILTER **************
   const allFilterClickListener = (e, filterProp) => {
-    console.log("filter clicked:", e.target.dataset.name);
+    const name = e.target.dataset.name;
+
+    //TODO: possible switch statement, need a function dynamically render all FilterButtons so all FilterProps are auto-generated
+    if (filterProp === "type") {
+      setType((prevState) => ({ ...type, [name]: !prevState[name] }));
+    }
+    if (filterProp === "weaknesses") {
+      setWeaknesses((prevState) => ({
+        ...weaknesses,
+        [name]: !prevState[name],
+      }));
+    }
   };
 
   return (
